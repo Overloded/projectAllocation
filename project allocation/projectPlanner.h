@@ -1,0 +1,7 @@
+#include "project.h"
+#include "person.h"
+#include "student.h"
+#include "supervisor.h"
+#include "fileReader.h"
+#include "projectAssigner.h"
+#include "display.h"
