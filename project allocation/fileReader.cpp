@@ -122,26 +122,44 @@ std::vector<Supervisor> FileReader::readSupervisors(std::string path)
 	openFile(path, file);
 	std::stringstream ss;
 	/*File format:
-	'name,supervisor_id,research_group
+	Personnel ID,Name,Job Title,Dept,Email,Projects,Available Projects
 	*/
-	std::string line, name, superv_id, res_grp;
+    std::string line, tempString;
 	int i = 0, p;
 	while (!file.eof()){
 		temp.push_back(Supervisor());
 		getline(file, line); //Extract line to sstream
+
+        ss.clear();
 		ss << line;
 
-		getline(ss, name, ','); //set name
-		//cout << name << endl;
-		temp[i].setName(name);
+        getline(ss, tempString, ','); //set supervisor ID
+        p = atoi(tempString.c_str());
+		temp[i].setSupervisorNumber(p);
 
-		getline(ss, superv_id, ','); //set supervisor ID
-		//cout << superv_id << endl;
-		p = atoi(superv_id.c_str());
-		temp[i].setSupervisorNumber(p); //in person or project class?
+        getline(ss, tempString, ','); //set name
+        temp[i].setName(tempString);
 
-		getline(ss, res_grp, ','); //set research group
-		temp[i].setResearchGroup(res_grp); 
+        getline(ss, tempString, ','); //set job title
+        temp[i].setJobTitle(tempString);
+
+        getline(ss, tempString, ',');
+        temp[i].setDepartment(tempString);
+
+        getline(ss, tempString, ',');
+        temp[i].setEmail(tempString);
+
+        getline(ss, tempString, ','); 
+        p = atoi(tempString.c_str());
+        temp[i].setProjects(p);
+
+        getline(ss, tempString, ',');
+        p = atoi(tempString.c_str());
+        temp[i].setAvailableProjects(p);
+
+
+		//getline(ss, res_grp, ','); //set research group
+		//temp[i].setResearchGroup(res_grp); 
 		//cout << res_grp << endl;
 		i++;
 	}

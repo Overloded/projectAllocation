@@ -17,13 +17,18 @@ void Display::printProjects(std::vector<Project> projects)
 }
 void Display::printSupervisors(std::vector<Supervisor> supervisors)
 {
-
+    std::cin.ignore();
 	for (std::vector<Supervisor>::iterator it = supervisors.begin(); it != supervisors.end(); ++it)
 	{
-		std::cout << "Name: " << it->getName()
-				  << " ID number: " << it->getSupervisorNumber()
-				  << " Research Group: "
-				  << it->getResearchGroup() << std::endl;
+        std::cout << "Name: " << it->getName() << std::endl
+            << " ID number: " << it->getSupervisorNumber() << std::endl
+            << " Job Title: " << it->getJobTitle() << std::endl
+            << " Department: " << it->getDepartment() << std::endl
+            << " Email:" << it->getEmail() << std::endl
+            << " Projects: " << it->getProjects() <<std::endl
+            << " Available Projects: " << it->getAvailableProjects() << std::endl;
+
+        std::cin.get();
 	}
 }
 

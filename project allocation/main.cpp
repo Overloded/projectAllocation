@@ -32,26 +32,26 @@ int main()
 	case 1:
 		{
 			std::string filePath;
-			std::cout << "Enter project file path: ";
+			//std::cout << "Enter project file path: ";
 
 			std::cin.ignore();
-			std::getline(std::cin, filePath);
-			projects = fr.readProjects(filePath);
+			//std::getline(std::cin, filePath);
+			//projects = fr.readProjects(filePath);
 
 			std::cout << "Enter supervisor file path: ";
 			std::getline(std::cin, filePath);
             supervisors = fr.readSupervisors(filePath);
 
-			std::cout << "Enter student file path: ";
-			std::getline(std::cin, filePath);
-            students = fr.readStudents(filePath, projects, &errorProject);
+			//std::cout << "Enter student file path: ";
+			//std::getline(std::cin, filePath);
+            //students = fr.readStudents(filePath, projects, &errorProject);
 			break;
 		}
 	case 2:
 		{
-			display.printProjects(projects);
+			//display.printProjects(projects);
 			display.printSupervisors(supervisors);
-			display.printStudents(students);
+			//display.printStudents(students);
 		break;
 		}
 	case 3:
