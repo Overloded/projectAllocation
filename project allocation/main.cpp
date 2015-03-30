@@ -32,26 +32,34 @@ int main()
 	case 1:
 		{
 			std::string filePath;
+#
+            /*UNCOMMENMT HERE TO READ PROJECTS*/
 			//std::cout << "Enter project file path: ";
-
 			std::cin.ignore();
 			//std::getline(std::cin, filePath);
 			//projects = fr.readProjects(filePath);
 
+
+            //Read in data for supervisors
 			std::cout << "Enter supervisor file path: ";
 			std::getline(std::cin, filePath);
             supervisors = fr.readSupervisors(filePath);
 
-			//std::cout << "Enter student file path: ";
-			//std::getline(std::cin, filePath);
-            //students = fr.readStudents(filePath, projects, &errorProject);
+            //Read in data for students
+			std::cout << "Enter student file path: ";
+			std::getline(std::cin, filePath);
+            students = fr.readStudents(filePath, projects, &errorProject);
 			break;
 		}
 	case 2:
 		{
+            /*UNCOMMENT THIS TO PRINT PROJECTS*/
 			//display.printProjects(projects);
+
+            //print supervisors
 			display.printSupervisors(supervisors);
-			//display.printStudents(students);
+            //print students
+			display.printStudents(students);
 		break;
 		}
 	case 3:

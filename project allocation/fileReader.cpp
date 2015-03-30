@@ -35,18 +35,15 @@ std::vector<Project> FileReader::readProjects(std::string path)
 		ss << line.c_str();
 
 		getline(ss, title, ','); //set title
-		//cout << title << endl;
 		temp[i].set_title(title);
 
 		getline(ss, p_id, ','); //set project ID
-		//cout << p_id << endl;
 		p = atoi(p_id.c_str());
 		temp[i].set_projectID(p);
 
 		getline(ss, s_id, ','); //set supervisor ID
 		d = atoi(s_id.c_str());
 		temp[i].set_supervisorID(d); //in person or project class?
-		//cout << s_id << endl;
 		i++;
 	}
 	file.close();
@@ -60,55 +57,43 @@ std::vector<Student> FileReader::readStudents(std::string path, std::vector<Proj
 	std::ifstream file;
 	openFile(path, file);
 
-	std::stringstream ss;
-	std::string line, name, reg_no, p_title;
+	
+	std::string line, sTemp;
 
 	int i = 0, p;
 
 	/*File format:
-	 name,reg_no,project preference 001,project preference 002,....
+	Student ID,Student Name,Registration Number,Registration Status,Email,Selections
 	*/
 	while (!file.eof()){
 		temp.push_back(Student());
 		getline(file, line); //Extract line to sstream
-		ss.clear();
-		ss << line;
 
-		getline(ss, name, ','); //set name
-		//cout << name << endl;
-		temp[i].setName(name);
+        std::stringstream ss(line);
 
-		getline(ss, reg_no, ','); //set reg no
-		//cout << reg_no << endl;
-		p = atoi(reg_no.c_str());
-		temp[i].setStudentNumber(p);
+        getline(ss, sTemp, ','); //set student id
+        p = atoi(sTemp.c_str());
+        temp[i].setIDnumber(p);
 
+        getline(ss, sTemp, ','); //set name
+        temp[i].setName(sTemp);
 
-		//readList(file); //set vector of preferences
-		for (int x = 0; x < 5; ++x)
-		{
-			std::string title;
-			getline(ss, title, ',');
+        getline(ss, sTemp, ','); //set registration number
+        p = atoi(sTemp.c_str());
+        temp[i].setStudentNumber(p);
 
-			bool isFound = false;
-			for (std::vector<Project>::iterator it = projectVector.begin(); it != projectVector.end(); ++it)
-			{
-				if (it->getTitle() == title)
-				{
-					temp[i].addProject(&(*it));
-					isFound = true;
-					break;
-				}
-			}
-			if (!isFound)
-			{
-				temp[i].addProject(errorProject);
-				std::string error = "The project title " + title +  " for student: " + temp[i].getName() + " is not a valid project\n"; 
-				writeToErrorLog(error);
-			}
-		}
-		++i;
-	}
+        getline(ss, sTemp, ','); //set registration status
+        temp[i].setRegStatus(sTemp);
+
+        getline(ss, sTemp, ','); //set email
+        temp[i].setEmail(sTemp);
+
+        getline(ss, sTemp, ','); //set selections
+        p = atoi(sTemp.c_str());
+        temp[i].setSelections(p);
+
+        i++;
+    }
 	file.close();
 	
 	return temp;
@@ -135,7 +120,7 @@ std::vector<Supervisor> FileReader::readSupervisors(std::string path)
 
         getline(ss, tempString, ','); //set supervisor ID
         p = atoi(tempString.c_str());
-		temp[i].setSupervisorNumber(p);
+		temp[i].setIDnumber(p);
 
         getline(ss, tempString, ','); //set name
         temp[i].setName(tempString);
@@ -143,17 +128,17 @@ std::vector<Supervisor> FileReader::readSupervisors(std::string path)
         getline(ss, tempString, ','); //set job title
         temp[i].setJobTitle(tempString);
 
-        getline(ss, tempString, ',');
+        getline(ss, tempString, ','); //set department
         temp[i].setDepartment(tempString);
 
-        getline(ss, tempString, ',');
+        getline(ss, tempString, ','); //set email
         temp[i].setEmail(tempString);
 
-        getline(ss, tempString, ','); 
+        getline(ss, tempString, ','); //set projects
         p = atoi(tempString.c_str());
         temp[i].setProjects(p);
 
-        getline(ss, tempString, ',');
+        getline(ss, tempString, ','); //set available projects
         p = atoi(tempString.c_str());
         temp[i].setAvailableProjects(p);
 
@@ -167,7 +152,6 @@ std::vector<Supervisor> FileReader::readSupervisors(std::string path)
 	return temp;
 
 }
-
 
 void FileReader::openFile(std::string path, std::ifstream& file)
 {
